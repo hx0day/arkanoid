@@ -1,4 +1,4 @@
-#include "main.h"
+п»ї#include "main.h"
 #include "3dmath.h"
 
 Sphere::Sphere(float x, float y,float z)
@@ -15,10 +15,10 @@ void Sphere::paint(float r, int d)
 	radius=r;
 	detal=d;
 
-		// Вместо создания сферы вручную мы создадим quadric-обьект.
+		// Р’РјРµСЃС‚Рѕ СЃРѕР·РґР°РЅРёСЏ СЃС„РµСЂС‹ РІСЂСѓС‡РЅСѓСЋ РјС‹ СЃРѕР·РґР°РґРёРј quadric-РѕР±СЊРµРєС‚.
 	GLUquadricObj *pObj = gluNewQuadric();
  
-	// Чтобы лучше всё визуализировать, сделаем сферу каркасной
+	// Р§С‚РѕР±С‹ Р»СѓС‡С€Рµ РІСЃС‘ РІРёР·СѓР°Р»РёР·РёСЂРѕРІР°С‚СЊ, СЃРґРµР»Р°РµРј СЃС„РµСЂСѓ РєР°СЂРєР°СЃРЅРѕР№
 	gluQuadricDrawStyle(pObj, GLU_LINE);
 	gluSphere(pObj, radius, detal,detal);
 }

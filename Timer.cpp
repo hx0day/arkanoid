@@ -1,4 +1,4 @@
-/*
+﻿/*
  * This file is part of AV Orchid.
  * Copyright (c) 2013, Dmitri R. Kuvshinov <evetro.here@gmail.com>
  * 

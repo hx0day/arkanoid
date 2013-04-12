@@ -1,4 +1,4 @@
-#include "main.h"
+﻿#include "main.h"
 
 
 Bloks::Bloks(float X,float Y, float Z)

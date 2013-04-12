@@ -1,47 +1,47 @@
-// Включаем наш хидер
+п»ї// Р’РєР»СЋС‡Р°РµРј РЅР°С€ С…РёРґРµСЂ
 #include "main.h"
  
 ///////////////////////////////////////////////////////////////
 //
-//		Функция, создающая наше окошко
+//		Р¤СѓРЅРєС†РёСЏ, СЃРѕР·РґР°СЋС‰Р°СЏ РЅР°С€Рµ РѕРєРѕС€РєРѕ
 //
 ///////////////////////////////////////////////////////////////
 HWND CreateMyWindow(LPSTR strWindowName, int width, int height, DWORD dwStyle, bool bFullScreen, HINSTANCE hInstance)
 {
-	HWND hWnd;		// дескриптор окна
-	WNDCLASS wndclass;	// класс окна
-	memset(&wndclass, 0, sizeof(WNDCLASS));		// Резервируем память под класс окна
-	wndclass.style = CS_HREDRAW | CS_VREDRAW;	// Стандартные параметра
-	wndclass.lpfnWndProc = WinProc;			// Передаём указатель на функцию обработки сообщений
+	HWND hWnd;		// РґРµСЃРєСЂРёРїС‚РѕСЂ РѕРєРЅР°
+	WNDCLASS wndclass;	// РєР»Р°СЃСЃ РѕРєРЅР°
+	memset(&wndclass, 0, sizeof(WNDCLASS));		// Р РµР·РµСЂРІРёСЂСѓРµРј РїР°РјСЏС‚СЊ РїРѕРґ РєР»Р°СЃСЃ РѕРєРЅР°
+	wndclass.style = CS_HREDRAW | CS_VREDRAW;	// РЎС‚Р°РЅРґР°СЂС‚РЅС‹Рµ РїР°СЂР°РјРµС‚СЂР°
+	wndclass.lpfnWndProc = WinProc;			// РџРµСЂРµРґР°С‘Рј СѓРєР°Р·Р°С‚РµР»СЊ РЅР° С„СѓРЅРєС†РёСЋ РѕР±СЂР°Р±РѕС‚РєРё СЃРѕРѕР±С‰РµРЅРёР№
 	wndclass.hInstance = hInstance;
-	wndclass.hIcon = LoadIcon(NULL, IDI_APPLICATION);	// Иконка
-	wndclass.hCursor = LoadCursor(NULL, IDC_ARROW);		// Курсор
-	wndclass.hbrBackground = (HBRUSH) (COLOR_WINDOW+1);	// Окно будет белым
-	wndclass.lpszClassName = "Wingman`s 3dLessons";		// Имя класса
-	RegisterClass(&wndclass);				//регистрируем класс
+	wndclass.hIcon = LoadIcon(NULL, IDI_APPLICATION);	// РРєРѕРЅРєР°
+	wndclass.hCursor = LoadCursor(NULL, IDC_ARROW);		// РљСѓСЂСЃРѕСЂ
+	wndclass.hbrBackground = (HBRUSH) (COLOR_WINDOW+1);	// РћРєРЅРѕ Р±СѓРґРµС‚ Р±РµР»С‹Рј
+	wndclass.lpszClassName = "Wingman`s 3dLessons";		// РРјСЏ РєР»Р°СЃСЃР°
+	RegisterClass(&wndclass);				//СЂРµРіРёСЃС‚СЂРёСЂСѓРµРј РєР»Р°СЃСЃ
  
-	dwStyle = WS_OVERLAPPEDWINDOW | WS_CLIPSIBLINGS | WS_CLIPCHILDREN; // Стиль окна
+	dwStyle = WS_OVERLAPPEDWINDOW | WS_CLIPSIBLINGS | WS_CLIPCHILDREN; // РЎС‚РёР»СЊ РѕРєРЅР°
  
 	g_hInstance = hInstance;
  
-	// Устанавливаем заданные размеры окна.
+	// РЈСЃС‚Р°РЅР°РІР»РёРІР°РµРј Р·Р°РґР°РЅРЅС‹Рµ СЂР°Р·РјРµСЂС‹ РѕРєРЅР°.
 	RECT rWindow;
-	rWindow.left	= 0;			// Левая сторона -  0
-	rWindow.right	= width;		// Правая сторона - 800
-	rWindow.top	    = 0;		// Верх - 0
-	rWindow.bottom	= height;		// Низ - 800
+	rWindow.left	= 0;			// Р›РµРІР°СЏ СЃС‚РѕСЂРѕРЅР° -  0
+	rWindow.right	= width;		// РџСЂР°РІР°СЏ СЃС‚РѕСЂРѕРЅР° - 800
+	rWindow.top	    = 0;		// Р’РµСЂС… - 0
+	rWindow.bottom	= height;		// РќРёР· - 800
  
-	AdjustWindowRect( &rWindow, dwStyle, false);	// Применяем заданные размеры
+	AdjustWindowRect( &rWindow, dwStyle, false);	// РџСЂРёРјРµРЅСЏРµРј Р·Р°РґР°РЅРЅС‹Рµ СЂР°Р·РјРµСЂС‹
  
-							// Создаём окно
+							// РЎРѕР·РґР°С‘Рј РѕРєРЅРѕ
 	hWnd = CreateWindow("Wingman`s 3dLessons", strWindowName, dwStyle, 0, 0,
 				rWindow.right  - rWindow.left, rWindow.bottom - rWindow.top,
 				NULL, NULL, hInstance, NULL);
  
-	if(!hWnd) return NULL;			// Есди не получилось - умираем...
-	ShowWindow(hWnd, SW_SHOWNORMAL);	// Показать окно
-	UpdateWindow(hWnd);			// И нарисовать его
-	SetFocus(hWnd);				// Фокусирует клавиатуру на наше окно
+	if(!hWnd) return NULL;			// Р•СЃРґРё РЅРµ РїРѕР»СѓС‡РёР»РѕСЃСЊ - СѓРјРёСЂР°РµРј...
+	ShowWindow(hWnd, SW_SHOWNORMAL);	// РџРѕРєР°Р·Р°С‚СЊ РѕРєРЅРѕ
+	UpdateWindow(hWnd);			// Р РЅР°СЂРёСЃРѕРІР°С‚СЊ РµРіРѕ
+	SetFocus(hWnd);				// Р¤РѕРєСѓСЃРёСЂСѓРµС‚ РєР»Р°РІРёР°С‚СѓСЂСѓ РЅР° РЅР°С€Рµ РѕРєРЅРѕ
  
 	return hWnd;
 }
@@ -49,32 +49,32 @@ HWND CreateMyWindow(LPSTR strWindowName, int width, int height, DWORD dwStyle, b
  
 ///////////////////////////////////////////////////////////////
 //
-//		Функция, устанавливающая формат пиксела
+//		Р¤СѓРЅРєС†РёСЏ, СѓСЃС‚Р°РЅР°РІР»РёРІР°СЋС‰Р°СЏ С„РѕСЂРјР°С‚ РїРёРєСЃРµР»Р°
 //
 ///////////////////////////////////////////////////////////////
 bool bSetupPixelFormat(HDC hdc)
 {
-	PIXELFORMATDESCRIPTOR pfd;	// Дескриптор формата пиксела
+	PIXELFORMATDESCRIPTOR pfd;	// Р”РµСЃРєСЂРёРїС‚РѕСЂ С„РѕСЂРјР°С‚Р° РїРёРєСЃРµР»Р°
 	int pixelformat;
-	pfd.nSize = sizeof(PIXELFORMATDESCRIPTOR);	// Устанавливаем размер структуры
-	pfd.nVersion = 1;				// Всегда ставим = 1
-			// Передаём нужные флаги OpenGL
+	pfd.nSize = sizeof(PIXELFORMATDESCRIPTOR);	// РЈСЃС‚Р°РЅР°РІР»РёРІР°РµРј СЂР°Р·РјРµСЂ СЃС‚СЂСѓРєС‚СѓСЂС‹
+	pfd.nVersion = 1;				// Р’СЃРµРіРґР° СЃС‚Р°РІРёРј = 1
+			// РџРµСЂРµРґР°С‘Рј РЅСѓР¶РЅС‹Рµ С„Р»Р°РіРё OpenGL
     pfd.dwFlags = PFD_DRAW_TO_WINDOW | PFD_SUPPORT_OPENGL | PFD_DOUBLEBUFFER;
-    pfd.dwLayerMask = PFD_MAIN_PLANE;		// Стандартная маска (один хрен игнорируется)
-    pfd.iPixelType = PFD_TYPE_RGBA;		// Нам нужны RGB and Alpha типа пикселей
-    pfd.cColorBits = SCREEN_DEPTH;		// Используем наши #define для цветовой глубины
-    pfd.cDepthBits = SCREEN_DEPTH;	// Это игнорируется для RGBA, но все равно передадим
+    pfd.dwLayerMask = PFD_MAIN_PLANE;		// РЎС‚Р°РЅРґР°СЂС‚РЅР°СЏ РјР°СЃРєР° (РѕРґРёРЅ С…СЂРµРЅ РёРіРЅРѕСЂРёСЂСѓРµС‚СЃСЏ)
+    pfd.iPixelType = PFD_TYPE_RGBA;		// РќР°Рј РЅСѓР¶РЅС‹ RGB and Alpha С‚РёРїР° РїРёРєСЃРµР»РµР№
+    pfd.cColorBits = SCREEN_DEPTH;		// РСЃРїРѕР»СЊР·СѓРµРј РЅР°С€Рё #define РґР»СЏ С†РІРµС‚РѕРІРѕР№ РіР»СѓР±РёРЅС‹
+    pfd.cDepthBits = SCREEN_DEPTH;	// Р­С‚Рѕ РёРіРЅРѕСЂРёСЂСѓРµС‚СЃСЏ РґР»СЏ RGBA, РЅРѕ РІСЃРµ СЂР°РІРЅРѕ РїРµСЂРµРґР°РґРёРј
     pfd.cAccumBits = 0;
     pfd.cStencilBits = 0;
  
-    // Ф-я ищет формат пиксела, наиболее подходящий заданным требованиям, выход при неудаче
+    // Р¤-СЏ РёС‰РµС‚ С„РѕСЂРјР°С‚ РїРёРєСЃРµР»Р°, РЅР°РёР±РѕР»РµРµ РїРѕРґС…РѕРґСЏС‰РёР№ Р·Р°РґР°РЅРЅС‹Рј С‚СЂРµР±РѕРІР°РЅРёСЏРј, РІС‹С…РѕРґ РїСЂРё РЅРµСѓРґР°С‡Рµ
     if ( (pixelformat = ChoosePixelFormat(hdc, &pfd)) == FALSE )
     {
         MessageBox(NULL, "ChoosePixelFormat failed", "Error", MB_OK);
         return FALSE;
     }
  
-    // Устанавливаем указанный формат пиксела
+    // РЈСЃС‚Р°РЅР°РІР»РёРІР°РµРј СѓРєР°Р·Р°РЅРЅС‹Р№ С„РѕСЂРјР°С‚ РїРёРєСЃРµР»Р°
     if (SetPixelFormat(hdc, pixelformat, &pfd) == FALSE)
     {
         MessageBox(NULL, "SetPixelFormat failed", "Error", MB_OK);
@@ -86,99 +86,99 @@ bool bSetupPixelFormat(HDC hdc)
  
 ///////////////////////////////////////////////////////////////
 //
-//		Ф-я устанавливает размер окна OpenGL
+//		Р¤-СЏ СѓСЃС‚Р°РЅР°РІР»РёРІР°РµС‚ СЂР°Р·РјРµСЂ РѕРєРЅР° OpenGL
 //
 ///////////////////////////////////////////////////////////////
 void SizeOpenGLScreen(int width, int height)
 {
-	if (height==0)		// Предотвратим деление на 0
+	if (height==0)		// РџСЂРµРґРѕС‚РІСЂР°С‚РёРј РґРµР»РµРЅРёРµ РЅР° 0
 		height=1;
  
-	// Сделаем наше окно OpenGL размером с главное окно программы. При желании можно сделать
-	// вьюпорт меньше окна.
+	// РЎРґРµР»Р°РµРј РЅР°С€Рµ РѕРєРЅРѕ OpenGL СЂР°Р·РјРµСЂРѕРј СЃ РіР»Р°РІРЅРѕРµ РѕРєРЅРѕ РїСЂРѕРіСЂР°РјРјС‹. РџСЂРё Р¶РµР»Р°РЅРёРё РјРѕР¶РЅРѕ СЃРґРµР»Р°С‚СЊ
+	// РІСЊСЋРїРѕСЂС‚ РјРµРЅСЊС€Рµ РѕРєРЅР°.
 	glViewport(0,0,width,height);
  
-	glMatrixMode(GL_PROJECTION);	// Выберем матрицу проекции
-	glLoadIdentity();		// И сбросим её
+	glMatrixMode(GL_PROJECTION);	// Р’С‹Р±РµСЂРµРј РјР°С‚СЂРёС†Сѓ РїСЂРѕРµРєС†РёРё
+	glLoadIdentity();		// Р СЃР±СЂРѕСЃРёРј РµС‘
  
-	// Вычислим перспективу нашего окна
-	// Параметры:
-	// (угол взгляда, отношение ширины и высоты,
-	// Ближайшее расстояние обьекта до камеры, при котором он виден,
-	// и дальнейшее расстояние, при котороом происходит отрисовка
+	// Р’С‹С‡РёСЃР»РёРј РїРµСЂСЃРїРµРєС‚РёРІСѓ РЅР°С€РµРіРѕ РѕРєРЅР°
+	// РџР°СЂР°РјРµС‚СЂС‹:
+	// (СѓРіРѕР» РІР·РіР»СЏРґР°, РѕС‚РЅРѕС€РµРЅРёРµ С€РёСЂРёРЅС‹ Рё РІС‹СЃРѕС‚С‹,
+	// Р‘Р»РёР¶Р°Р№С€РµРµ СЂР°СЃСЃС‚РѕСЏРЅРёРµ РѕР±СЊРµРєС‚Р° РґРѕ РєР°РјРµСЂС‹, РїСЂРё РєРѕС‚РѕСЂРѕРј РѕРЅ РІРёРґРµРЅ,
+	// Рё РґР°Р»СЊРЅРµР№С€РµРµ СЂР°СЃСЃС‚РѕСЏРЅРёРµ, РїСЂРё РєРѕС‚РѕСЂРѕРѕРј РїСЂРѕРёСЃС…РѕРґРёС‚ РѕС‚СЂРёСЃРѕРІРєР°
 	gluPerspective(45.0f,(GLfloat)width/(GLfloat)height, .5f ,150.0f);
  
-	// Важно: дальняя дистанция должна быть больше единицы, если вы не хотите получить
-	// прикольные артефакты, работая с освещением. Мало кто знает об этом, но при
-	// использовании света с ближней дистанцией камеры меньше 1, на полигонах будут
-	// видны неуместные блики и флеши.
+	// Р’Р°Р¶РЅРѕ: РґР°Р»СЊРЅСЏСЏ РґРёСЃС‚Р°РЅС†РёСЏ РґРѕР»Р¶РЅР° Р±С‹С‚СЊ Р±РѕР»СЊС€Рµ РµРґРёРЅРёС†С‹, РµСЃР»Рё РІС‹ РЅРµ С…РѕС‚РёС‚Рµ РїРѕР»СѓС‡РёС‚СЊ
+	// РїСЂРёРєРѕР»СЊРЅС‹Рµ Р°СЂС‚РµС„Р°РєС‚С‹, СЂР°Р±РѕС‚Р°СЏ СЃ РѕСЃРІРµС‰РµРЅРёРµРј. РњР°Р»Рѕ РєС‚Рѕ Р·РЅР°РµС‚ РѕР± СЌС‚РѕРј, РЅРѕ РїСЂРё
+	// РёСЃРїРѕР»СЊР·РѕРІР°РЅРёРё СЃРІРµС‚Р° СЃ Р±Р»РёР¶РЅРµР№ РґРёСЃС‚Р°РЅС†РёРµР№ РєР°РјРµСЂС‹ РјРµРЅСЊС€Рµ 1, РЅР° РїРѕР»РёРіРѕРЅР°С… Р±СѓРґСѓС‚
+	// РІРёРґРЅС‹ РЅРµСѓРјРµСЃС‚РЅС‹Рµ Р±Р»РёРєРё Рё С„Р»РµС€Рё.
  
-	glMatrixMode(GL_MODELVIEW);  // Выберем матрицу моделей
-	glLoadIdentity();            // И сбросим её
+	glMatrixMode(GL_MODELVIEW);  // Р’С‹Р±РµСЂРµРј РјР°С‚СЂРёС†Сѓ РјРѕРґРµР»РµР№
+	glLoadIdentity();            // Р СЃР±СЂРѕСЃРёРј РµС‘
 }
  
  
 ///////////////////////////////////////////////////////////////
 //
-//			Ф-я инициализирует OpenGL
+//			Р¤-СЏ РёРЅРёС†РёР°Р»РёР·РёСЂСѓРµС‚ OpenGL
 //
 ///////////////////////////////////////////////////////////////
  
 void InitializeOpenGL(int width, int height)
 {
-    g_hDC = GetDC(g_hWnd);	// Устанавливаем глобальный дескриптор окна
+    g_hDC = GetDC(g_hWnd);	// РЈСЃС‚Р°РЅР°РІР»РёРІР°РµРј РіР»РѕР±Р°Р»СЊРЅС‹Р№ РґРµСЃРєСЂРёРїС‚РѕСЂ РѕРєРЅР°
  
-    if (!bSetupPixelFormat(g_hDC))		// Устанавливаем формат пиксела
-        PostQuitMessage (0);			// И выходим при ошибке
+    if (!bSetupPixelFormat(g_hDC))		// РЈСЃС‚Р°РЅР°РІР»РёРІР°РµРј С„РѕСЂРјР°С‚ РїРёРєСЃРµР»Р°
+        PostQuitMessage (0);			// Р РІС‹С…РѕРґРёРј РїСЂРё РѕС€РёР±РєРµ
  
-    g_hRC = wglCreateContext(g_hDC);		// Контекст рендеринга для hdc
-    wglMakeCurrent(g_hDC, g_hRC);		// Делаем контекст текущим
-    glEnable(GL_TEXTURE_2D);			// Включаем текстуры
-    glEnable(GL_DEPTH_TEST);			// И тест глубины
+    g_hRC = wglCreateContext(g_hDC);		// РљРѕРЅС‚РµРєСЃС‚ СЂРµРЅРґРµСЂРёРЅРіР° РґР»СЏ hdc
+    wglMakeCurrent(g_hDC, g_hRC);		// Р”РµР»Р°РµРј РєРѕРЅС‚РµРєСЃС‚ С‚РµРєСѓС‰РёРј
+    glEnable(GL_TEXTURE_2D);			// Р’РєР»СЋС‡Р°РµРј С‚РµРєСЃС‚СѓСЂС‹
+    glEnable(GL_DEPTH_TEST);			// Р С‚РµСЃС‚ РіР»СѓР±РёРЅС‹
  
-    // И устанавливаем размер вьюпорта:
+    // Р СѓСЃС‚Р°РЅР°РІР»РёРІР°РµРј СЂР°Р·РјРµСЂ РІСЊСЋРїРѕСЂС‚Р°:
     SizeOpenGLScreen(width, height);
 }
  
 ///////////////////////////////////////////////////////////////
 //
-//			Ф-я де-Инициализирует OpenGL
+//			Р¤-СЏ РґРµ-РРЅРёС†РёР°Р»РёР·РёСЂСѓРµС‚ OpenGL
 //
 ///////////////////////////////////////////////////////////////
 void DeInit()
 {
 	if (g_hRC)
 	{
-		wglMakeCurrent(NULL, NULL);	// Освобождает память, занятую для рендера
-		wglDeleteContext(g_hRC);	// Удаляет контекст рендеринга OpenGL
+		wglMakeCurrent(NULL, NULL);	// РћСЃРІРѕР±РѕР¶РґР°РµС‚ РїР°РјСЏС‚СЊ, Р·Р°РЅСЏС‚СѓСЋ РґР»СЏ СЂРµРЅРґРµСЂР°
+		wglDeleteContext(g_hRC);	// РЈРґР°Р»СЏРµС‚ РєРѕРЅС‚РµРєСЃС‚ СЂРµРЅРґРµСЂРёРЅРіР° OpenGL
 	}
  
 	if (g_hDC)
-		ReleaseDC(g_hWnd, g_hDC);	// Убирает HDC из памяти
+		ReleaseDC(g_hWnd, g_hDC);	// РЈР±РёСЂР°РµС‚ HDC РёР· РїР°РјСЏС‚Рё
  
-	UnregisterClass("Wingman`s 3dLessons", g_hInstance);	// Освобождаем класс окна
-	PostQuitMessage (0);					// Выходим
+	UnregisterClass("Wingman`s 3dLessons", g_hInstance);	// РћСЃРІРѕР±РѕР¶РґР°РµРј РєР»Р°СЃСЃ РѕРєРЅР°
+	PostQuitMessage (0);					// Р’С‹С…РѕРґРёРј
 }
  
 ///////////////////////////////////////////////////////////////
 //
-//			Функция регистрирует и создает окно
+//			Р¤СѓРЅРєС†РёСЏ СЂРµРіРёСЃС‚СЂРёСЂСѓРµС‚ Рё СЃРѕР·РґР°РµС‚ РѕРєРЅРѕ
 //
 ///////////////////////////////////////////////////////////////
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hprev, PSTR cmdline, int ishow)
 {
 	HWND hWnd;
  
-	// Создает окно с помощью нашей функции, в которую передаём:
-	// Имя, Ширину, Высоту, любые флаги для окна, хотим ли мы фулскрин, и hInstance
+	// РЎРѕР·РґР°РµС‚ РѕРєРЅРѕ СЃ РїРѕРјРѕС‰СЊСЋ РЅР°С€РµР№ С„СѓРЅРєС†РёРё, РІ РєРѕС‚РѕСЂСѓСЋ РїРµСЂРµРґР°С‘Рј:
+	// РРјСЏ, РЁРёСЂРёРЅСѓ, Р’С‹СЃРѕС‚Сѓ, Р»СЋР±С‹Рµ С„Р»Р°РіРё РґР»СЏ РѕРєРЅР°, С…РѕС‚РёРј Р»Рё РјС‹ С„СѓР»СЃРєСЂРёРЅ, Рё hInstance
 	hWnd = CreateMyWindow("Wingman`s 3dLessons", SCREEN_WIDTH, SCREEN_HEIGHT, 0, false, hInstance);
  
-	// Выходим при ошибке
+	// Р’С‹С…РѕРґРёРј РїСЂРё РѕС€РёР±РєРµ
 	if(hWnd == NULL) return TRUE;
  
-	// Инициализируем OpenGL
+	// РРЅРёС†РёР°Р»РёР·РёСЂСѓРµРј OpenGL
 	Init(hWnd);
  
-	// Запускаем игровой цикл
+	// Р—Р°РїСѓСЃРєР°РµРј РёРіСЂРѕРІРѕР№ С†РёРєР»
 	return MainLoop();
 }
