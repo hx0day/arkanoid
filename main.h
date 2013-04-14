@@ -86,10 +86,11 @@ class Bloks
 	CVector3 g_vBloksR[4];
 	CVector3 g_vBloksL[4];
 	CVector3 g_vBloksN[4];
-	float x,y,z,r,g,b;	
+	float x,y,z,r,g,b,hp;	
 	Bloks(float X,float Y, float Z);
+	Bloks(float HP);
 	~Bloks(void);
-	
+	void paint();
 	void paint(float r,float g,float b);
 	void mouvR()
 	{

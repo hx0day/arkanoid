@@ -9,8 +9,8 @@
 #include "3dmath.h"
 float speedx =-0.2f;
 float speedy =0.1f;
-
-Sphere shar(0.3f, 0.01f, 0); 
+Bloks bloki[10]={3,2,1,2,3,1,2,3,1,2};
+Sphere shar(-0.4f, 0.01f, 0); 
 // Необходимые дескрипторы:
 HWND  g_hWnd;
 RECT  g_rRect;
@@ -55,7 +55,12 @@ glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
  
 	// Рисуем полигон/*
 	doska.paint(150,150,150);
-	
+	 bloki[0].paint();
+  /*for(int i=0;i<10;i++)
+  {
+	  bloki[i].paint();
+  }*/
+  
 	// Move the sphere to it's center position
 	glTranslatef(g_vPosition.x, g_vPosition.y, g_vPosition.z);
  
@@ -69,21 +74,25 @@ glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	g_vPosition= shar.g_vPosition;
  
   shar.paint(radius,5000);
- 
+   
 	// Теперь воспользуемся замечательной функцией, которая сделает всё за нас.
 	// Всё, что нам нужно сделать - передать в неё массив вершин треугольника,
 	// центр сферы и её радиус. Функция вернёт true/false в зависимости от
 	// факта пересечения.
+  bool blokis[10];
 	bool bCollided = SpherePolygonCollision(stenka[0].g_vQuads, g_vPosition, 4, radius);
-
-bool bCollided2 = SpherePolygonCollision(stenka[1].g_vQuads, g_vPosition, 4, radius);
+	bool bCollided2 = SpherePolygonCollision(stenka[1].g_vQuads, g_vPosition, 4, radius);
 bool bCollided3 = SpherePolygonCollision(stenka[2].g_vQuads, g_vPosition, 4, radius);
 bool bCollided4 = SpherePolygonCollision(doska.g_vBloksP, g_vPosition, 4, radius);
 bool bCollided5 = SpherePolygonCollision(doska.g_vBloksL, g_vPosition, 4, radius);
 bool bCollided6 = SpherePolygonCollision(doska.g_vBloksR, g_vPosition, 4, radius);
+blokis[0] = SpherePolygonCollision(bloki[0].g_vBloksP, g_vPosition, 4, radius);
+blokis[1] = SpherePolygonCollision(bloki[0].g_vBloksL, g_vPosition, 4, radius);
+blokis[2] = SpherePolygonCollision(bloki[0].g_vBloksR, g_vPosition, 4, radius);
 
+blokis[3] = SpherePolygonCollision(bloki[0].g_vBloksV, g_vPosition, 4, radius);
 	// Если есть пересечение, делаем сферу зеленой, иначе - фиолетовой
-	if(bCollided||bCollided4)
+	if(bCollided||bCollided4||blokis[0])
 		{
 			speedy*=-1;
 			 			
@@ -92,14 +101,18 @@ bool bCollided6 = SpherePolygonCollision(doska.g_vBloksR, g_vPosition, 4, radius
 	if(bCollided2||bCollided3){
  			speedx*=-1;
 	}
-	if((bCollided5||bCollided6)){
+	if(blokis[1]||blokis[2]||bCollided5||bCollided6){
  			speedx*=-1;
 			speedy*=-1;
 	}
-	if((bCollided5&&bCollided4)||(bCollided6&&bCollided4))
+	if((bCollided5&&bCollided4)||(bCollided6&&bCollided4)||(blokis[0] && blokis[3] && blokis[1])||(blokis[0] && blokis[3]  && blokis[2]))
 	{
 			speedx*=-1;
 			speedy*=-1;
+	}
+	if(blokis[1]||blokis[0]||blokis[2])
+	{
+		bloki[0].hp-=1;
 	}
 	SwapBuffers(g_hDC);
 }
