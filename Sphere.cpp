@@ -20,7 +20,7 @@ void Sphere::paint(float r, int d)
  
 	// Чтобы лучше всё визуализировать, сделаем сферу каркасной
 	gluQuadricDrawStyle(pObj, GLU_LINE);
-	gluSphere(pObj, radius, detal,detal);
+	gluSphere(pObj, radius, detal*10,detal*10);
 }
 void Sphere::move(float timer,float speedx,float speedy)
 {

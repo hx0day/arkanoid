@@ -94,12 +94,12 @@ class Bloks
 	void paint(float r,float g,float b);
 	void mouvR()
 	{
-	x+=0.003f;
+	x+=0.0003f;
 	}
 
 	void mouvL()
 	{
-			x-=0.003f;
+			x-=0.0003f;
 	}
 
 };

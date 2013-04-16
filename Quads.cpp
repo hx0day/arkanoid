@@ -9,7 +9,6 @@ Quads::Quads(void)
 Quads::~Quads(void)
 {
 }
-
 void Quads::mas(CVector3 g_vTriangle0,CVector3 g_vTriangle1,CVector3 g_vTriangle2,CVector3 g_vTriangle3)
 {
 	g_vQuads[0]=g_vTriangle0;

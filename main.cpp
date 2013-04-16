@@ -7,10 +7,10 @@
 // Наш главный хидер:
 #include "main.h"
 #include "3dmath.h"
-float speedx =-0.2f;
-float speedy =0.1f;
+float speedx =-0.13f;
+float speedy =-0.09f;
 Bloks bloki[10]={3,2,1,2,3,1,2,3,1,2};
-Sphere shar(-0.4f, 0.01f, 0); 
+Sphere shar(-0.3f, 0.01f, 0); 
 // Необходимые дескрипторы:
 HWND  g_hWnd;
 RECT  g_rRect;
@@ -19,7 +19,7 @@ HGLRC g_hRC;
 HINSTANCE g_hInstance;
 Timer<> timer;
 Quads stenka[3];
-Bloks doska(0,-0.40,0);
+Bloks doska(0,-0.41,0);
 // Массив из трех вершин для хранения координат треугольника
 CVector3 g_vStenka[4],g_vStenka2[4],g_vStenka3[4];
 CVector3 g_vDoska1[4],g_vDoska2[4],g_vDoska3[4];
@@ -48,7 +48,7 @@ glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
  gluLookAt(0.f, 0.0, 1.f,  0, 0.0f, 0,   0, 1, 0);
  
 	// Врощаем камеру на угол g_rotateY
-	//glRotatef(g_rotateY, 0, 1, 0);
+	glRotatef(g_rotateY, 0, 1, 0);
  
 	// устанавливаем радиус сферы
 	float radius = 0.02f;
@@ -73,48 +73,82 @@ glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
   shar.move(h,speedx,speedy);
 	g_vPosition= shar.g_vPosition;
  
-  shar.paint(radius,5000);
+  shar.paint(radius,5);
    
 	// Теперь воспользуемся замечательной функцией, которая сделает всё за нас.
 	// Всё, что нам нужно сделать - передать в неё массив вершин треугольника,
 	// центр сферы и её радиус. Функция вернёт true/false в зависимости от
 	// факта пересечения.
-  bool blokis[10];
-	bool bCollided = SpherePolygonCollision(stenka[0].g_vQuads, g_vPosition, 4, radius);
-	bool bCollided2 = SpherePolygonCollision(stenka[1].g_vQuads, g_vPosition, 4, radius);
-bool bCollided3 = SpherePolygonCollision(stenka[2].g_vQuads, g_vPosition, 4, radius);
-bool bCollided4 = SpherePolygonCollision(doska.g_vBloksP, g_vPosition, 4, radius);
-bool bCollided5 = SpherePolygonCollision(doska.g_vBloksL, g_vPosition, 4, radius);
-bool bCollided6 = SpherePolygonCollision(doska.g_vBloksR, g_vPosition, 4, radius);
+  bool blokis[5];
+  bool dosks[5];
+	
+dosks[0] = SpherePolygonCollision(doska.g_vBloksP, g_vPosition, 4, radius);
+dosks[1] = SpherePolygonCollision(doska.g_vBloksL, g_vPosition, 4, radius);
+dosks[2] = SpherePolygonCollision(doska.g_vBloksR, g_vPosition, 4, radius);
+dosks[3] = SpherePolygonCollision(doska.g_vBloksV, g_vPosition, 4, radius);
+dosks[4] = SpherePolygonCollision(doska.g_vBloksN, g_vPosition, 4, radius);
+
+if(
+		(dosks[0] && dosks[3] && dosks[1])
+		||(dosks[0] && dosks[3]  && dosks[2])
+		)
+{
+			speedx*=-1;
+			speedy*=-1;
+
+}
+ else if(dosks[0]||dosks[3]){
+	  //speedx*=-1;
+	  //shar.g_vPosition.y+=0.1;
+	  speedy*=-1;
+ }
+ else if(dosks[1]||dosks[2]){speedx*=-1;speedy*=-1;}
+
 blokis[0] = SpherePolygonCollision(bloki[0].g_vBloksP, g_vPosition, 4, radius);
 blokis[1] = SpherePolygonCollision(bloki[0].g_vBloksL, g_vPosition, 4, radius);
 blokis[2] = SpherePolygonCollision(bloki[0].g_vBloksR, g_vPosition, 4, radius);
-
 blokis[3] = SpherePolygonCollision(bloki[0].g_vBloksV, g_vPosition, 4, radius);
-	// Если есть пересечение, делаем сферу зеленой, иначе - фиолетовой
-	if(bCollided||bCollided4||blokis[0])
-		{
-			speedy*=-1;
-			 			
-		}
-	
-	if(bCollided2||bCollided3){
- 			speedx*=-1;
-	}
-	if(blokis[1]||blokis[2]||bCollided5||bCollided6){
- 			speedx*=-1;
-			speedy*=-1;
-	}
-	if((bCollided5&&bCollided4)||(bCollided6&&bCollided4)||(blokis[0] && blokis[3] && blokis[1])||(blokis[0] && blokis[3]  && blokis[2]))
+blokis[4] = SpherePolygonCollision(bloki[0].g_vBloksN, g_vPosition, 4, radius);
+
+if ((blokis[0] && blokis[3] && blokis[1])
+		||(blokis[0] && blokis[3]  && blokis[2])
+		||(blokis[0] && blokis[4]  && blokis[1])
+		||(blokis[0] && blokis[4]  && blokis[2])
+	)
 	{
 			speedx*=-1;
 			speedy*=-1;
 	}
-	if(blokis[1]||blokis[0]||blokis[2])
+	
+ 
+	else if(blokis[1]||blokis[2])
+		speedx*=-1;
+
+	else if (blokis[3]||blokis[4])
+		speedy*=-1;
+	
+
+
+	//поподаниея 
+	if(blokis[1]||blokis[3]||blokis[4]||blokis[0]||blokis[2])
 	{
 		bloki[0].hp-=1;
 	}
-	SwapBuffers(g_hDC);
+
+	bool bCollided = SpherePolygonCollision(stenka[0].g_vQuads, g_vPosition, 4, radius);
+	bool bCollided2 = SpherePolygonCollision(stenka[1].g_vQuads, g_vPosition, 4, radius);
+bool bCollided3 = SpherePolygonCollision(stenka[2].g_vQuads, g_vPosition, 4, radius);
+//стенки
+if(bCollided)
+		{
+			speedy*=-1;
+			 			
+		}
+
+	else if(bCollided2||bCollided3){
+ 			speedx*=-1;
+	}	
+ SwapBuffers(g_hDC);
 }
 
 ///////////////////////////////////////////////////////////////
@@ -192,11 +226,10 @@ void CheckForMovement()
     // Функция GetKeyState() возвращает true или false
     // в зависимости от того, нажата ли переданная ей клавиша.
     if(GetKeyState(VK_UP) & 0x80 || GetKeyState('W') & 0x80)
-		speedx*=-1;
+		g_rotateY+=1;
 
-  //  if(GetKeyState(VK_DOWN) & 0x80 || GetKeyState('S') & 0x80)
-        //g_Camera.MoveCamera(-kSpeed);
-
+    if(GetKeyState(VK_DOWN) & 0x80 || GetKeyState('S') & 0x80)
+    	g_rotateY-=1;
     //Вращаем вокруг оси Y
     if(GetKeyState(VK_LEFT) & 0x80 || GetKeyState('A') & 0x80)         // Если нажали "влево"
 		doska.mouvL();    
